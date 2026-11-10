@@ -1,0 +1,14 @@
+{
+	"name": "Bobine",
+	"short_name": "Bobine",
+	"description": "Your films and shows, on every screen.",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		}
+	],
+	"display": "standalone",
+	"start_url": "/"
+}
