@@ -1,7 +1,7 @@
 # Bobine
 
-A media center in the spirit of Kodi: one library of films and shows, watched from a browser,
-a desktop app, a phone or a TV with a remote.
+A media center: one library of films and shows, watched from a browser, a desktop app, a phone
+or a TV with a remote.
 
 This is the base. Sign-in works end to end; the library, scanning and playback are next.
 
@@ -14,6 +14,8 @@ This is the base. Sign-in works end to end; the library, scanning and playback a
 | Desktop | Tauri 2 around the static client build, in `apps/desktop` |
 | Mobile and TV | Capacitor 8 Android project in `apps/client/android`, with the Android TV launcher |
 | Deploy | One distroless image behind Traefik, on Dokploy, at https://bobine.facile.studio |
+
+Read [AGENTS.md](AGENTS.md) before contributing: it holds the team's rules.
 
 ## Quick start
 

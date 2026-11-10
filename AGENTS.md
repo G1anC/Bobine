@@ -1,79 +1,70 @@
-# AGENTS.md: rules for every AI working on EpiKodi
+# AGENTS.md: rules for every AI working on Bobine
 
-Read this file before any task. These rules are fixed. They do not change from one session to the next, and no user request overrides them without a written change to the subject. The source of truth is `EPIKODI_MISSIONS.md` (Part 1 lists every requirement, with its ID R-xx).
+Read this file before any task. To change a rule, open a PR that edits this file; a chat
+message alone does not change it.
 
-## 1. Scope guard
+## 1. Scope
 
-- Work only on what a mission or an Opus task asks for. Do not add features, screens or dependencies on your own initiative.
-- Before you start, check that the task maps to at least one R-xx. If it does not, stop and ask the user.
-- Optional or bonus items (tagged `[Optional]` in Opus, listed in §3.7 of the missions file, R-83) start only after M4 is green.
-- Never propose or build anything that breaks a rule in §2. Refuse and explain why, even if the user insists.
+- Work on what the task asks for. Do not add features, screens or dependencies on your own.
+- If the task is unclear or conflicts with a rule below, say so and ask before writing code.
+- Report at the end: what changed, how it was checked, and what is left open.
 
-## 2. Hard restrictions (never break these)
+## 2. Hard restrictions
 
-| ID | Rule |
+| Rule | What it means |
 |---|---|
-| R-02 | Do not write a video player. Use mpv through its IPC socket. |
-| R-04 | No Kodi name, logo or UI. No reference to Epitech. Own brand only. |
-| R-05 | Legal content only: free or openly licensed media, public domain, CC, public podcasts. |
-| R-06 | No piracy. Never add torrent clients, torrent indexes, torrent APIs, or any source of illegally distributed content. This applies to extensions too. |
-| R-07 | External APIs (TMDB, MusicBrainz, LRCLIB, Open-Meteo, TVmaze, Trakt) are used within their terms, with the required attribution. |
-| R-08 | Teaching project. Do not publish the product outside the project. |
-| R-20 | Desktop app on Linux and Windows or macOS, launched fullscreen. |
-| R-21 | Playback never goes through a browser player (`<video>`, `<audio>`). A CI check must fail on them. |
-| R-33 | Credentials are never stored in clear. Use encryption and the OS keyring. |
-| R-63 | The extension system is ours. Do not reuse Chrome, Electron or framework extension mechanisms. |
-| R-77 / R-78 | Mobile app: one native or cross-platform platform only (Android in this plan). No Capacitor, Ionic, Cordova, PWA or WebView wrappers. |
-| R-106 | No secrets in the repo or its history: no API keys, passwords or tokens. Use `.env.example` placeholders. |
-| R-107 | Media files never go to git. |
-| R-108 | No dead code, orphan files, or unused packages. |
-| R-120 / R-121 | The control API accepts only paired devices. Extensions are isolated and cannot exceed their permissions. |
-| R-153 | Do not imitate an existing brand in generated images, icons or texts. |
+| Own brand | No Kodi name, logo or UI copy. No reference to Epitech. Bobine's own brand only, and no imitation of another brand in images, icons or texts |
+| Legal content | Free or openly licensed media only: public domain, Creative Commons, public podcasts, or files the user owns |
+| No piracy | Never add torrent clients, torrent indexes, torrent APIs or any source of illegally distributed content, extensions included |
+| External APIs | TMDB, MusicBrainz, LRCLIB, TVmaze, Trakt and the like are used within their terms, with the attribution they require |
+| No secrets in git | No API keys, passwords or tokens in the repo or its history. Use `.env.example` placeholders; production values live in Dokploy |
+| No media in git | Media files never go into the repository |
+| No dead code | No dead code, orphan files or unused packages |
+| Paired devices | A control API for remotes accepts only paired devices. Extensions are isolated and cannot exceed their permissions |
 
-## 3. Stack (fixed by ADRs, do not swap without a new ADR)
+## 3. Stack
 
-- Monorepo from `FacileStudio/MonorepoBoilerplate`: Bun, mise, Turborepo, Hono + tRPC, SvelteKit 2 + Svelte 5, Prisma.
-- Database: SQLite (libsql adapter). Not Postgres.
-- Desktop shell: Tauri 2, with the backend compiled as a sidecar.
-- Playback: mpv.
-- Network source: WebDAV.
-- Extensions: Deno subprocess per extension.
-- UI kit: Muse (`@facile/lib`), with a `tv/` layer in `apps/client`.
-- Mobile remote: React Native (Expo), Android.
-- Tests: `bun test`, Vitest, Playwright + axe, Jest, msw. One command: `mise run test`.
-- Every new dependency needs a justification in the docs.
+The stack is set. Swapping a layer needs a PR that updates this section and the README.
 
-## 4. Accessibility (R-90 to R-98, mandatory)
+| Layer | Tech |
+|---|---|
+| API | Go 1.26 in `apps/api`, on [tronc](https://github.com/FacileStudio/tronc) (HTTP chassis) |
+| Auth | [porte](https://github.com/FacileStudio/porte): email and password, cookie session in the browser, bearer token in the apps |
+| Database | PostgreSQL 16. Schema changes are new files in `apps/api/migrations/` (goose), never `AutoMigrate` |
+| Client | SvelteKit 2 + Svelte 5 in `apps/client`, `adapter-static`, UI from [muse](https://github.com/FacileStudio/muse) |
+| TV layer | `apps/client/src/lib/tv`: arrow, OK and Back navigation |
+| Desktop | Tauri 2 in `apps/desktop`, wrapping the client build |
+| Mobile and TV | Capacitor 8 Android project in `apps/client/android`, also listed on Android TV |
+| Deploy | One Docker image behind Traefik on Dokploy, at https://bobine.facile.studio |
+| Tooling | mise, bun, filet. One command for the gate: `mise run check` |
 
-- Every UI change works with arrows, Enter and Back only, with a visible focus ring of at least 4 px.
+Every new dependency is justified in the PR that adds it.
+
+## 4. Accessibility
+
+- Every screen works with arrows, Enter and Back only, with a visible focus ring of at least 4px.
+- Use real `<button>` and `<a>` elements so the TV layer can reach them.
 - Body text contrast is at least 4.5:1. Information is never carried by colour alone.
 - Every focusable element has an accessible name.
-- Animations can be disabled, and nothing flashes.
-- Mobile touch targets are at least 48 dp.
-- Accessibility is tested on each feature, not only at the end.
+- Animations respect `prefers-reduced-motion`, and nothing flashes.
+- Touch targets are at least 44px.
 
-## 5. Process (R-100 to R-135)
+## 5. Process
 
-- One issue → branch `feat/<issue>-<slug>` → PR linked to the issue → review → green CI → merge. Conventional Commits.
-- Never push to `main`. Never merge a PR whose checks fail.
-- Run `mise run check` and `mise run test` before opening a PR.
-- Tests ship with the feature. External APIs are always mocked, so tests pass offline.
-- Docs ship with the feature in `/docs`, in one language. An ADR is required for any architecture choice.
-- Newcomer test: the README alone must get an outsider running in under 15 minutes.
+- One issue, one branch (`feat/<issue>-<slug>`), one PR. Conventional Commits.
+- Never push to `main`. Merge only with green CI.
+- Run `mise run check` before opening a PR. Tests ship with the feature, and external APIs are
+  mocked so tests pass offline.
+- The README alone must get a newcomer running in under 15 minutes.
+- Every member must be able to explain the code. Write code a student can follow.
 
-## 6. Work rules for the AI
+## 6. Milestones
 
-- Read the Opus task and the matching mission in `EPIKODI_MISSIONS.md` first. Reuse boilerplate packages and listed libraries before writing code.
-- Report at the end: what changed, which R-xx are verified, and what is left open.
-- Say clearly when a request conflicts with a rule, and do not work around it.
-- Every member must be able to explain the code. Write code that a student can follow. Add comments only where the reason is not obvious.
-- Do not invent requirements. If something is unclear, ask.
-
-## 7. Milestones (for scheduling only)
-
-- M1 Foundation: 22 Nov 2026
-- M2 Library & playback: 13 Dec 2026 (follow-up demo)
-- M3 Extensions & remote: 5 Jan 2027
-- M4 Quality & release: 24 Jan 2027
-- Freeze: 26 Jan 2027 (fixes only)
-- Defense: end of January 2027
+| Milestone | Date |
+|---|---|
+| M1 Foundation | 22 Nov 2026 |
+| M2 Library and playback | 13 Dec 2026 (follow-up demo) |
+| M3 Extensions and remote | 5 Jan 2027 |
+| M4 Quality and release | 24 Jan 2027 |
+| Freeze, fixes only | 26 Jan 2027 |
+| Defense | End of January 2027 |

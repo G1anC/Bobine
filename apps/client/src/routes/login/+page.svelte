@@ -99,6 +99,7 @@
 				<Button
 					type="button"
 					variant="ghost"
+					size="lg"
 					onclick={() => (mode = mode === 'login' ? 'register' : 'login')}
 				>
 					{mode === 'login' ? 'Create an account' : 'I already have an account'}
