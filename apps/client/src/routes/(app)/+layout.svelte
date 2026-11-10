@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { MobileNav, SideBar, Spinner } from '@facile/muse';
+	import { Button, MobileNav, SideBar, Spinner } from '@facile/muse';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { BOBINE_ICON, appIcons } from '$lib/icons';
-	import { session, signOut } from '$lib/session.svelte';
+	import { loadSession, session, signOut } from '$lib/session.svelte';
 	import { appearance, saveTheme } from '$lib/theme.svelte';
 
 	let { children } = $props();
@@ -50,8 +50,11 @@
 		<MobileNav class="md:hidden" items={pages} {user} {userMenu} />
 	</div>
 {:else if session.status === 'offline'}
-	<div class="flex min-h-dvh items-center justify-center bg-fc-page px-4 text-center text-fc-sm text-fc-fg-muted">
-		Bobine cannot reach its server. Check the connection and reopen the app.
+	<div class="flex min-h-dvh flex-col items-center justify-center gap-6 bg-fc-page px-4 text-center">
+		<p role="alert" class="text-fc-sm text-fc-fg-muted">
+			Bobine cannot reach its server. Check the connection, then try again.
+		</p>
+		<Button size="lg" icon={appIcons.retry} onclick={loadSession}>Try again</Button>
 	</div>
 {:else}
 	<div class="flex min-h-dvh items-center justify-center bg-fc-page">

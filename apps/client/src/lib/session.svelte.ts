@@ -9,8 +9,12 @@ export const session = $state<{ status: 'loading' | 'ready' | 'offline'; user: U
 	user: null
 });
 
-/** Asks the server who the caller is. A 401 is signed out; anything else is the server being unreachable. */
+/**
+ * Asks the server who the caller is. A 401 is signed out; anything else is the server being
+ * unreachable. Calling it again is the retry: the status goes back to `loading` meanwhile.
+ */
 export async function loadSession(): Promise<void> {
+	session.status = 'loading';
 	try {
 		session.user = await backend.me();
 		session.status = 'ready';

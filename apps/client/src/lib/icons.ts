@@ -19,6 +19,7 @@ const PREVIOUS_ICON = 'iconoir:skip-prev';
 const NEXT_ICON = 'iconoir:skip-next';
 const MUSIC_ICON = 'iconoir:music-double-note';
 const PODCASTS_ICON = 'iconoir:microphone';
+const RETRY_ICON = 'iconoir:refresh-double';
 
 export const appIcons = {
 	home: HOME_ICON,
@@ -35,7 +36,8 @@ export const appIcons = {
 	previous: PREVIOUS_ICON,
 	next: NEXT_ICON,
 	music: MUSIC_ICON,
-	podcasts: PODCASTS_ICON
+	podcasts: PODCASTS_ICON,
+	retry: RETRY_ICON
 };
 
 /** The icon that stands for each kind of media, on placeholders and empty states. */
@@ -131,6 +133,11 @@ export function registerAppIcons() {
 			width: 24,
 			height: 24,
 			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect width=\"6\" height=\"12\" x=\"9\" y=\"2\" rx=\"3\"/><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M5 10v1a7 7 0 1 0 14 0v-1m-7 8v4m0 0H9m3 0h3\"/></g>"
+		},
+		[RETRY_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M21.168 8A10 10 0 0 0 12 2c-5.185 0-9.45 3.947-9.95 9\"/><path d=\"M17 8h4.4a.6.6 0 0 0 .6-.6V3M2.881 16c1.544 3.532 5.068 6 9.168 6c5.186 0 9.45-3.947 9.951-9\"/><path d=\"M7.05 16h-4.4a.6.6 0 0 0-.6.6V21\"/></g>"
 		}
 	});
 }
