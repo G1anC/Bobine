@@ -2,12 +2,13 @@
     import type { MediaItem } from '$lib/library';
     import { formatDuration } from '$lib/time';
 
-    let { title, item }: { title: string; item: MediaItem } = $props();
+    let { title, item, current }: { title: string; item: MediaItem; current?: string } = $props();
 </script>
 
 <!--
 @component
-The episodes or tracks of a title, each one a link that starts playing it.
+The episodes or tracks of a title, each one a link that starts playing it. The one named by
+`current` is marked as playing, in words as well as in shade.
 -->
 
 <section class="flex flex-col gap-4" aria-label={title}>
@@ -17,11 +18,13 @@ The episodes or tracks of a title, each one a link that starts playing it.
             <li>
                 <a
                     href="/play/{item.id}?track={track.id}"
+                    aria-current={track.id === current ? 'true' : undefined}
                     class="flex min-h-11 items-center gap-4 rounded-fc-md px-3 py-2 text-fc-sm text-fc-fg outline-fc-ring
-                        hover:bg-fc-surface focus-visible:outline-solid"
+                        hover:bg-fc-surface focus-visible:outline-solid aria-current:bg-fc-surface"
                 >
                     <span class="w-6 text-fc-fg-muted">{index + 1}</span>
                     <span class="flex-1">{track.title}</span>
+                    {#if track.id === current}<span class="text-fc-xs text-fc-fg-muted">Playing</span>{/if}
                     <span class="text-fc-xs text-fc-fg-muted">{formatDuration(track.seconds)}</span>
                 </a>
             </li>

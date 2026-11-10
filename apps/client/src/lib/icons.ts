@@ -8,12 +8,30 @@ const HOME_ICON = 'iconoir:home-simple';
 const MOVIES_ICON = 'iconoir:movie';
 const SHOWS_ICON = 'iconoir:modern-tv';
 const PLAY_ICON = 'iconoir:play';
+const PAUSE_ICON = 'iconoir:pause';
+const BACK_ICON = 'iconoir:backward-15-seconds';
+const FORWARD_ICON = 'iconoir:forward-15-seconds';
+const SOUND_ICON = 'iconoir:sound-high';
+const MUTED_ICON = 'iconoir:sound-off';
+const EXPAND_ICON = 'iconoir:expand';
+const EXTERNAL_ICON = 'iconoir:open-new-window';
+const PREVIOUS_ICON = 'iconoir:skip-prev';
+const NEXT_ICON = 'iconoir:skip-next';
 
 export const appIcons = {
 	home: HOME_ICON,
 	movies: MOVIES_ICON,
 	shows: SHOWS_ICON,
-	play: PLAY_ICON
+	play: PLAY_ICON,
+	pause: PAUSE_ICON,
+	back: BACK_ICON,
+	forward: FORWARD_ICON,
+	sound: SOUND_ICON,
+	muted: MUTED_ICON,
+	expand: EXPAND_ICON,
+	external: EXTERNAL_ICON,
+	previous: PREVIOUS_ICON,
+	next: NEXT_ICON
 };
 
 /** The icon that stands for each kind of media, on placeholders and empty states. */
@@ -52,6 +70,51 @@ export function registerAppIcons() {
 			width: 24,
 			height: 24,
 			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6.906 4.537A.6.6 0 0 0 6 5.053v13.894a.6.6 0 0 0 .906.516l11.723-6.947a.6.6 0 0 0 0-1.032z\"/>"
+		},
+		[PAUSE_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" d=\"M6 18.4V5.6a.6.6 0 0 1 .6-.6h2.8a.6.6 0 0 1 .6.6v12.8a.6.6 0 0 1-.6.6H6.6a.6.6 0 0 1-.6-.6Zm8 0V5.6a.6.6 0 0 1 .6-.6h2.8a.6.6 0 0 1 .6.6v12.8a.6.6 0 0 1-.6.6h-2.8a.6.6 0 0 1-.6-.6Z\"/>"
+		},
+		[BACK_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M3 13a9 9 0 1 0 9-9M9 9v7\"/><path d=\"M15 9h-2a1 1 0 0 0-1 1v1.5a1 1 0 0 0 1 1h1a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1h-2m0-12H4.5m0 0l2-2m-2 2l2 2\"/></g>"
+		},
+		[FORWARD_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M21 13a9 9 0 1 1-9-9m0 0h7.5m0 0l-2-2m2 2l-2 2M9 9v7\"/><path d=\"M15 9h-2a1 1 0 0 0-1 1v1.5a1 1 0 0 0 1 1h1a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1h-2\"/></g>"
+		},
+		[SOUND_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M1 13.857v-3.714a2 2 0 0 1 2-2h2.9a1 1 0 0 0 .55-.165l6-3.956a1 1 0 0 1 1.55.835v14.286a1 1 0 0 1-1.55.835l-6-3.956a1 1 0 0 0-.55-.165H3a2 2 0 0 1-2-2Z\"/><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M17.5 7.5S19 9 19 11.5s-1.5 4-1.5 4m3-11S23 7 23 11.5s-2.5 7-2.5 7\"/></g>"
+		},
+		[MUTED_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"m18 14l2-2m2-2l-2 2m0 0l-2-2m2 2l2 2\"/><path d=\"M2 13.857v-3.714a2 2 0 0 1 2-2h2.9a1 1 0 0 0 .55-.165l6-3.956a1 1 0 0 1 1.55.835v14.286a1 1 0 0 1-1.55.835l-6-3.956a1 1 0 0 0-.55-.165H4a2 2 0 0 1-2-2Z\"/></g>"
+		},
+		[EXPAND_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 9L4 4m0 0v4m0-4h4m7 5l5-5m0 0v4m0-4h-4M9 15l-5 5m0 0v-4m0 4h4m7-5l5 5m0 0v-4m0 4h-4\"/>"
+		},
+		[EXTERNAL_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"2\"><path stroke-linejoin=\"round\" d=\"M21 3h-6m6 0l-9 9m9-9v6\"/><path d=\"M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6\"/></g>"
+		},
+		[PREVIOUS_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 7v10M17.028 5.267a.6.6 0 0 1 .972.471v12.524a.6.6 0 0 1-.972.47l-7.931-6.261a.6.6 0 0 1 0-.942z\"/>"
+		},
+		[NEXT_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M18 7v10M6.972 5.267A.6.6 0 0 0 6 5.738v12.524a.6.6 0 0 0 .972.47l7.931-6.261a.6.6 0 0 0 0-.942z\"/>"
 		}
 	});
 }
