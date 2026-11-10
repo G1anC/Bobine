@@ -19,8 +19,8 @@ The episodes or tracks of a title, each one a link that starts playing it. The o
                 <a
                     href="/play/{item.id}?track={track.id}"
                     aria-current={track.id === current ? 'true' : undefined}
-                    class="flex min-h-11 items-center gap-4 rounded-fc-md px-3 py-2 text-fc-sm text-fc-fg outline-fc-ring
-                        hover:bg-fc-surface focus-visible:outline-solid aria-current:bg-fc-surface"
+                    class="flex min-h-11 items-center gap-4 rounded-fc-md px-3 py-2 text-fc-sm text-fc-fg
+                        outline-fc-ring hover:bg-fc-surface focus-visible:outline-solid aria-current:bg-fc-surface"
                 >
                     <span class="w-6 text-fc-fg-muted">{index + 1}</span>
                     <span class="flex-1">{track.title}</span>

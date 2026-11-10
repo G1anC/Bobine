@@ -1,11 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { library } from './library';
+import { isVideo, library } from './library';
 
 describe('library', () => {
     it('lists only the kind it is asked for', async () => {
         const movies = await library.list('movie');
         expect(movies.length).toBeGreaterThan(0);
         expect(movies.every((item) => item.kind === 'movie')).toBe(true);
+    });
+
+    it('knows which kinds have a picture', () => {
+        expect(isVideo('movie')).toBe(true);
+        expect(isVideo('show')).toBe(true);
+        expect(isVideo('album')).toBe(false);
+        expect(isVideo('podcast')).toBe(false);
+    });
+
+    it('holds at least one title of every kind', async () => {
+        for (const kind of ['movie', 'show', 'album', 'podcast'] as const) {
+            expect((await library.list(kind)).length).toBeGreaterThan(0);
+        }
     });
 
     it('finds a title by its id and answers undefined for an unknown one', async () => {

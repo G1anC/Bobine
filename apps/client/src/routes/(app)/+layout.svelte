@@ -18,7 +18,14 @@
 	const pages = $derived([
 		{ label: 'Home', href: '/', icon: appIcons.home, active: path === '/' },
 		{ label: 'Movies', href: '/movies', icon: appIcons.movies, active: path.startsWith('/movies') },
-		{ label: 'Shows', href: '/shows', icon: appIcons.shows, active: path.startsWith('/shows') }
+		{ label: 'Shows', href: '/shows', icon: appIcons.shows, active: path.startsWith('/shows') },
+		{ label: 'Music', href: '/music', icon: appIcons.music, active: path.startsWith('/music') },
+		{
+			label: 'Podcasts',
+			href: '/podcasts',
+			icon: appIcons.podcasts,
+			active: path.startsWith('/podcasts')
+		}
 	]);
 	const user = $derived(
 		session.user

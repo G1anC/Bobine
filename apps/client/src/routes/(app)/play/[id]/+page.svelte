@@ -6,7 +6,7 @@
     import TrackList from '$lib/components/TrackList.svelte';
     import VlcHandOff from '$lib/components/VlcHandOff.svelte';
     import { kindIcons } from '$lib/icons';
-    import { library, type MediaItem, type Track } from '$lib/library';
+    import { isVideo, library, type MediaItem, type Track } from '$lib/library';
     import { neighbour, pickTrack } from '$lib/playback';
     import { canHandOff } from '$lib/vlc';
 
@@ -38,9 +38,10 @@
             <h1 class="text-fc-2xl text-fc-fg">{item.title}</h1>
             {#if item.tracks.length > 1}<p class="text-fc-sm text-fc-fg-muted">{track.title}</p>{/if}
         </header>
-        {#if here}
+        {#if here || !isVideo(item.kind)}
             {#key track.id}
                 <Player
+                    {item}
                     {track}
                     onprevious={previous && (() => play(previous))}
                     onnext={next && (() => play(next))}

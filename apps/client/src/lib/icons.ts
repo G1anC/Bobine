@@ -17,6 +17,8 @@ const EXPAND_ICON = 'iconoir:expand';
 const EXTERNAL_ICON = 'iconoir:open-new-window';
 const PREVIOUS_ICON = 'iconoir:skip-prev';
 const NEXT_ICON = 'iconoir:skip-next';
+const MUSIC_ICON = 'iconoir:music-double-note';
+const PODCASTS_ICON = 'iconoir:microphone';
 
 export const appIcons = {
 	home: HOME_ICON,
@@ -31,13 +33,17 @@ export const appIcons = {
 	expand: EXPAND_ICON,
 	external: EXTERNAL_ICON,
 	previous: PREVIOUS_ICON,
-	next: NEXT_ICON
+	next: NEXT_ICON,
+	music: MUSIC_ICON,
+	podcasts: PODCASTS_ICON
 };
 
 /** The icon that stands for each kind of media, on placeholders and empty states. */
 export const kindIcons: Record<MediaKind, string> = {
 	movie: MOVIES_ICON,
-	show: SHOWS_ICON
+	show: SHOWS_ICON,
+	album: MUSIC_ICON,
+	podcast: PODCASTS_ICON
 };
 
 /**
@@ -115,6 +121,16 @@ export function registerAppIcons() {
 			width: 24,
 			height: 24,
 			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M18 7v10M6.972 5.267A.6.6 0 0 0 6 5.738v12.524a.6.6 0 0 0 .972.47l7.931-6.261a.6.6 0 0 0 0-.942z\"/>"
+		},
+		[MUSIC_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M20 14V3L9 5v11\"/><path d=\"M17 19h1a2 2 0 0 0 2-2v-3h-3a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2M6 21h1a2 2 0 0 0 2-2v-3H6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2\"/></g>"
+		},
+		[PODCASTS_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect width=\"6\" height=\"12\" x=\"9\" y=\"2\" rx=\"3\"/><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M5 10v1a7 7 0 1 0 14 0v-1m-7 8v4m0 0H9m3 0h3\"/></g>"
 		}
 	});
 }

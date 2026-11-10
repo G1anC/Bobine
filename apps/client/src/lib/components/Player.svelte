@@ -1,11 +1,17 @@
 <script lang="ts">
     import { Icon, IconButton, Progress } from '@facile/muse';
+    import Artwork from '$lib/components/Artwork.svelte';
     import { appIcons } from '$lib/icons';
-    import type { Track } from '$lib/library';
+    import { isVideo, type MediaItem, type Track } from '$lib/library';
     import { seekTo } from '$lib/playback';
     import { clock } from '$lib/time';
 
-    let { track, onprevious, onnext }: { track: Track; onprevious?: () => void; onnext?: () => void } = $props();
+    let {
+        item,
+        track,
+        onprevious,
+        onnext
+    }: { item: MediaItem; track: Track; onprevious?: () => void; onnext?: () => void } = $props();
 
     const STEP = 15;
 
@@ -33,9 +39,10 @@
 
 <!--
 @component
-Plays one video inside Bobine. Every control is a real button, so a remote reaches it with
-the arrows: play and pause, 15 seconds back or forward, the neighbouring tracks, mute and
-full screen. Full screen takes the controls along with the picture.
+Plays one track inside Bobine: a video with its picture, or audio next to its artwork. Every
+control is a real button, so a remote reaches it with the arrows: play and pause, 15 seconds
+back or forward, the neighbouring tracks, mute and, for video, full screen. Full screen takes
+the controls along with the picture.
 -->
 
 <div
@@ -43,18 +50,31 @@ full screen. Full screen takes the controls along with the picture.
     class="flex flex-col gap-4 bg-fc-page [&>video]:max-h-[60dvh] [&:fullscreen]:p-6 [&:fullscreen>video]:aspect-auto
         [&:fullscreen>video]:h-0 [&:fullscreen>video]:max-h-none [&:fullscreen>video]:flex-1"
 >
-    <!-- svelte-ignore a11y_media_has_caption -->
-    <video
-        src={track.url}
-        autoplay
-        playsinline
-        bind:paused
-        bind:muted
-        bind:currentTime={position}
-        bind:duration
-        onended={onnext}
-        class="aspect-video w-full rounded-fc-lg bg-fc-surface"
-    ></video>
+    {#if isVideo(item.kind)}
+        <!-- svelte-ignore a11y_media_has_caption -->
+        <video
+            src={track.url}
+            autoplay
+            playsinline
+            bind:paused
+            bind:muted
+            bind:currentTime={position}
+            bind:duration
+            onended={onnext}
+            class="aspect-video w-full rounded-fc-lg bg-fc-surface"
+        ></video>
+    {:else}
+        <Artwork title={item.title} kind={item.kind} class="aspect-square w-40 md:w-56" />
+        <audio
+            src={track.url}
+            autoplay
+            bind:paused
+            bind:muted
+            bind:currentTime={position}
+            bind:duration
+            onended={onnext}
+        ></audio>
+    {/if}
     <Progress value={position} max={length} label="Playback position" />
     <div class="flex flex-wrap items-center gap-2">
         <IconButton aria-label={paused ? 'Play' : 'Pause'} onclick={() => (paused = !paused)}>
@@ -76,8 +96,10 @@ full screen. Full screen takes the controls along with the picture.
         <IconButton aria-label={muted ? 'Unmute' : 'Mute'} onclick={() => (muted = !muted)}>
             <Icon icon={muted ? appIcons.muted : appIcons.sound} />
         </IconButton>
-        <IconButton aria-label="Full screen" onclick={toggleFullscreen}>
-            <Icon icon={appIcons.expand} />
-        </IconButton>
+        {#if isVideo(item.kind)}
+            <IconButton aria-label="Full screen" onclick={toggleFullscreen}>
+                <Icon icon={appIcons.expand} />
+            </IconButton>
+        {/if}
     </div>
 </div>
