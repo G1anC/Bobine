@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const invoke = vi.fn();
 const isDesktop = vi.fn();
@@ -6,7 +6,7 @@ const isDesktop = vi.fn();
 vi.mock('@tauri-apps/api/core', () => ({ invoke }));
 vi.mock('$lib/platform', () => ({ isApp: () => true, isDesktop }));
 
-const { isStreamUrl, openInVlc, vlcLink } = await import('./vlc');
+const { handOffEnabled, isStreamUrl, openInVlc, setHandOff, vlcLink } = await import('./vlc');
 
 describe('vlc', () => {
     beforeEach(() => {
@@ -41,5 +41,27 @@ describe('vlc', () => {
         isDesktop.mockReturnValue(true);
         await expect(openInVlc('--play-and-exit')).rejects.toThrow();
         expect(invoke).not.toHaveBeenCalled();
+    });
+});
+
+describe('the VLC preference', () => {
+    afterEach(() => vi.unstubAllGlobals());
+
+    it('is on until the user turns it off, and remembers the choice', () => {
+        const saved = new Map<string, string>();
+        vi.stubGlobal('localStorage', {
+            getItem: (key: string) => saved.get(key) ?? null,
+            setItem: (key: string, value: string) => saved.set(key, value)
+        });
+        expect(handOffEnabled()).toBe(true);
+        setHandOff(false);
+        expect(handOffEnabled()).toBe(false);
+        setHandOff(true);
+        expect(handOffEnabled()).toBe(true);
+    });
+
+    it('stays on where nothing can be saved', () => {
+        expect(handOffEnabled()).toBe(true);
+        expect(() => setHandOff(false)).not.toThrow();
     });
 });

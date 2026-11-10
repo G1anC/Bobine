@@ -5,7 +5,7 @@
 	import { registerAppIcons } from '$lib/icons';
 	import { loadSession } from '$lib/session.svelte';
 	import { registerRemote } from '$lib/tv/remote';
-	import { saveTheme, storedTheme } from '$lib/theme';
+	import { loadTheme } from '$lib/theme.svelte';
 
 	let { children } = $props();
 
@@ -13,7 +13,7 @@
 	registerAppIcons();
 
 	onMount(() => {
-		saveTheme(storedTheme());
+		loadTheme();
 		void loadSession();
 		return registerRemote();
 	});

@@ -8,11 +8,11 @@
     import { kindIcons } from '$lib/icons';
     import { isVideo, library, type MediaItem, type Track } from '$lib/library';
     import { neighbour, pickTrack } from '$lib/playback';
-    import { canHandOff } from '$lib/vlc';
+    import { canHandOff, handOffEnabled } from '$lib/vlc';
 
     let item = $state<MediaItem>();
     let loaded = $state(false);
-    let here = $state(!canHandOff());
+    let here = $state(!(canHandOff() && handOffEnabled()));
 
     $effect(() => {
         void library.get(page.params.id ?? '').then((found) => {

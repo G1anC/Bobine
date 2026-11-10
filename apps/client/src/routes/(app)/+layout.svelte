@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { MobileNav, SideBar, Spinner, type Theme } from '@facile/muse';
+	import { MobileNav, SideBar, Spinner } from '@facile/muse';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { BOBINE_ICON, appIcons } from '$lib/icons';
 	import { session, signOut } from '$lib/session.svelte';
-	import { saveTheme, storedTheme } from '$lib/theme';
+	import { appearance, saveTheme } from '$lib/theme.svelte';
 
 	let { children } = $props();
-
-	let theme = $state<Theme>(storedTheme());
 
 	$effect(() => {
 		if (session.status === 'ready' && !session.user) void goto('/login', { replaceState: true });
@@ -33,11 +31,9 @@
 			: undefined
 	);
 	const userMenu = $derived({
-		theme,
-		onThemeChange: (next: Theme) => {
-			theme = next;
-			saveTheme(next);
-		},
+		theme: appearance.theme,
+		onThemeChange: saveTheme,
+		settingsHref: '/settings',
 		onSignOut: async () => {
 			await signOut();
 			await goto('/login', { replaceState: true });
