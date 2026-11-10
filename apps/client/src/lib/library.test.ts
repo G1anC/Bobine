@@ -8,6 +8,11 @@ describe('library', () => {
         expect(movies.every((item) => item.kind === 'movie')).toBe(true);
     });
 
+    it('finds a title by its id and answers undefined for an unknown one', async () => {
+        expect((await library.get('sintel'))?.title).toBe('Sintel');
+        expect(await library.get('no-such-title')).toBeUndefined();
+    });
+
     it('gives every title a unique id', async () => {
         const ids = (await library.all()).map((item) => item.id);
         expect(new Set(ids).size).toBe(ids.length);

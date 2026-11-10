@@ -129,5 +129,7 @@ export const library = {
     /** Every title of one kind, in catalogue order. */
     list: async (kind: MediaKind): Promise<MediaItem[]> => SAMPLE.filter((item) => item.kind === kind),
     /** The whole catalogue, for the shelves that mix kinds. */
-    all: async (): Promise<MediaItem[]> => SAMPLE
+    all: async (): Promise<MediaItem[]> => SAMPLE,
+    /** One title by its id, or undefined when the library does not hold it. */
+    get: async (id: string): Promise<MediaItem | undefined> => SAMPLE.find((item) => item.id === id)
 };

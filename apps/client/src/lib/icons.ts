@@ -7,11 +7,13 @@ export const BOBINE_ICON = 'iconoir:cinema-old';
 const HOME_ICON = 'iconoir:home-simple';
 const MOVIES_ICON = 'iconoir:movie';
 const SHOWS_ICON = 'iconoir:modern-tv';
+const PLAY_ICON = 'iconoir:play';
 
 export const appIcons = {
 	home: HOME_ICON,
 	movies: MOVIES_ICON,
-	shows: SHOWS_ICON
+	shows: SHOWS_ICON,
+	play: PLAY_ICON
 };
 
 /** The icon that stands for each kind of media, on placeholders and empty states. */
@@ -45,6 +47,11 @@ export function registerAppIcons() {
 			width: 24,
 			height: 24,
 			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M7 21h10\"/><path d=\"M2 16.4V3.6a.6.6 0 0 1 .6-.6h18.8a.6.6 0 0 1 .6.6v12.8a.6.6 0 0 1-.6.6H2.6a.6.6 0 0 1-.6-.6Z\"/></g>"
+		},
+		[PLAY_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6.906 4.537A.6.6 0 0 0 6 5.053v13.894a.6.6 0 0 0 .906.516l11.723-6.947a.6.6 0 0 0 0-1.032z\"/>"
 		}
 	});
 }
