@@ -1,6 +1,27 @@
 @import '@facile/muse/styles';
 @source '../node_modules/@facile/muse/src';
 
+@font-face {
+	font-family: 'Nimbus Sans Narrow';
+	src: url('./lib/fonts/NimbusSansNarrow-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Nimbus Sans Narrow';
+	src: url('./lib/fonts/NimbusSansNarrow-Bold.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-fc-body: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
+	--font-fc-title: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
+}
+
 @layer base {
 	@media (min-width: 1600px) {
 		html {
