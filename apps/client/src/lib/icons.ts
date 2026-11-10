@@ -1,4 +1,5 @@
 import { registerIcons } from '@facile/muse';
+import type { MediaKind } from '$lib/library';
 
 /** Bobine's mark: a film camera with its two reels. */
 export const BOBINE_ICON = 'iconoir:cinema-old';
@@ -11,6 +12,12 @@ export const appIcons = {
 	home: HOME_ICON,
 	movies: MOVIES_ICON,
 	shows: SHOWS_ICON
+};
+
+/** The icon that stands for each kind of media, on placeholders and empty states. */
+export const kindIcons: Record<MediaKind, string> = {
+	movie: MOVIES_ICON,
+	show: SHOWS_ICON
 };
 
 /**
