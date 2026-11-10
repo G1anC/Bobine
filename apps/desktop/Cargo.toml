@@ -1,6 +1,6 @@
 [package]
 name = "bobine-desktop"
-version = "0.0.0"
+version = "0.1.0"
 description = "Bobine desktop app: a Tauri shell around the web client"
 license = "MIT"
 edition = "2024"
