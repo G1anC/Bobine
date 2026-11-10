@@ -1,0 +1,16 @@
+@import '@facile/muse/styles';
+@source '../node_modules/@facile/muse/src';
+
+@layer base {
+	@media (min-width: 1600px) {
+		html {
+			font-size: 125%;
+		}
+	}
+
+	@media (min-width: 2400px) {
+		html {
+			font-size: 150%;
+		}
+	}
+}

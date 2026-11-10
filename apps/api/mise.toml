@@ -1,0 +1,15 @@
+[tools]
+go = "1.26"
+
+[tasks.deps]
+description = "Download the Go modules"
+run = "go mod download"
+
+[tasks.dev]
+description = "Run the API on :4000 against the local Postgres"
+run = "go run ."
+env = { DATABASE_URL = "postgres://bobine:bobine@127.0.0.1:5433/bobine?sslmode=disable", APP_ENV = "development", ALLOW_REGISTRATION = "true", CORS_ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:1420,https://localhost,tauri://localhost,http://tauri.localhost" }
+
+[tasks.build]
+description = "Build the API binary"
+run = "go build -o bin/api ."

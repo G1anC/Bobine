@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Bobine",
+  "mainBinaryName": "bobine-desktop",
+  "version": "../client/package.json",
+  "identifier": "studio.facile.bobine",
+  "build": {
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../client/build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Bobine",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 560,
+        "resizable": true,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' blob: https://bobine.facile.studio; connect-src 'self' ipc: http://ipc.localhost https://bobine.facile.studio"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb", "appimage", "nsis", "dmg", "app"],
+    "category": "Video",
+    "shortDescription": "Your films and shows, on every screen",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

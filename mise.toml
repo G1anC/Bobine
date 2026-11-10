@@ -1,0 +1,45 @@
+monorepo_root = true
+
+[settings]
+experimental = true
+
+[monorepo]
+config_roots = ["apps/api", "apps/client", "apps/desktop"]
+
+[tools]
+go = "1.26"
+bun = "1.3.11"
+node = "24"
+lefthook = "latest"
+
+[hooks]
+postinstall = "lefthook install"
+
+[env]
+TEST_DATABASE_URL = "postgres://bobine:bobine@127.0.0.1:5433/bobine?sslmode=disable"
+
+[tasks.bootstrap]
+description = "Install every dependency"
+depends = ["//apps/api:deps", "//apps/client:install"]
+run = "true"
+
+[tasks.db-up]
+description = "Start the local Postgres on 127.0.0.1:5433"
+run = "docker compose -f docker-compose.dev.yml up -d"
+
+[tasks.db-down]
+description = "Stop the local Postgres"
+run = "docker compose -f docker-compose.dev.yml down"
+
+[tasks.dev]
+description = "Run the API and the client dev server"
+depends = ["//apps/api:dev", "//apps/client:dev"]
+run = "true"
+
+[tasks.check]
+description = "Run the full quality gate"
+run = "sh ./scripts/check.sh"
+
+[tasks.format]
+description = "Format the Go sources in place"
+run = "sh ./scripts/check.sh --format"

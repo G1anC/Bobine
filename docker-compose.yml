@@ -1,0 +1,75 @@
+# One container, one hostname: the Go binary serves /api and the built client.
+# Traefik takes the whole host; there is no stripprefix, because the routes live
+# under /api in the binary. The service is exposed, never published.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bobine}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-bobine}
+    expose:
+      - "5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bobine}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - "4000"
+    networks:
+      - default
+      - dokploy-network
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: dokploy-network
+      traefik.http.routers.bobine-web.rule: "Host(`bobine.facile.studio`)"
+      traefik.http.routers.bobine-web.entrypoints: web
+      traefik.http.routers.bobine-web.middlewares: redirect-to-https@file
+      traefik.http.routers.bobine-web.service: bobine-svc
+      traefik.http.routers.bobine-secure.rule: "Host(`bobine.facile.studio`)"
+      traefik.http.routers.bobine-secure.entrypoints: websecure
+      traefik.http.routers.bobine-secure.tls.certresolver: letsencrypt
+      traefik.http.routers.bobine-secure.service: bobine-svc
+      traefik.http.services.bobine-svc.loadbalancer.server.port: "4000"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-bobine}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-bobine}?sslmode=disable
+      PORT: "4000"
+      APP_ENV: ${APP_ENV:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      PUBLIC_URL: ${PUBLIC_URL:-https://bobine.facile.studio}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-private,cloudflare}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://localhost,capacitor://localhost,tauri://localhost,http://tauri.localhost}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
+      OIDC_REDIRECT_URL: ${OIDC_REDIRECT_URL:-}
+      OIDC_SUCCESS_URL: ${OIDC_SUCCESS_URL:-}
+    healthcheck:
+      test: ["CMD", "/api", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  dokploy-network:
+    external: true
+
+volumes:
+  db_data:
+    name: bobine_db_data

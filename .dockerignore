@@ -1,0 +1,6 @@
+**/node_modules
+**/.svelte-kit
+apps/client/build
+apps/client/android
+apps/desktop
+.git

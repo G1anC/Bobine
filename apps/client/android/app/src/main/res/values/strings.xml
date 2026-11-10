@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Bobine</string>
+    <string name="title_activity_main">Bobine</string>
+    <string name="package_name">studio.facile.bobine</string>
+    <string name="custom_url_scheme">studio.facile.bobine</string>
+</resources>
