@@ -42,12 +42,24 @@
 </script>
 
 {#if session.user}
-	<div class="flex h-dvh overflow-hidden bg-fc-page">
-		<SideBar class="hidden md:flex" icon={BOBINE_ICON} title="Bobine" {pages} {user} {userMenu} />
-		<main id="main" class="relative flex-1 overflow-y-auto overscroll-contain px-4 pt-6 pb-28 md:px-10 md:pt-10 md:pb-10">
+	<div class="relative h-dvh overflow-hidden bg-fc-page">
+		<SideBar
+			class="absolute top-4 bottom-4 left-4 z-30 hidden h-auto bg-transparent md:flex"
+			data-zone="left"
+			icon={BOBINE_ICON}
+			title="Bobine"
+			{pages}
+			{user}
+			{userMenu}
+		/>
+		<main
+			id="main"
+			data-zone="main"
+			class="absolute inset-0 overflow-y-auto overscroll-contain px-4 pt-6 pb-28 md:pt-10 md:pr-10 md:pb-10 md:pl-68"
+		>
 			{@render children()}
 		</main>
-		<MobileNav class="md:hidden" items={pages} {user} {userMenu} />
+		<MobileNav class="md:hidden" data-zone="left" items={pages} {user} {userMenu} />
 	</div>
 {:else if session.status === 'offline'}
 	<div class="flex min-h-dvh flex-col items-center justify-center gap-6 bg-fc-page px-4 text-center">
