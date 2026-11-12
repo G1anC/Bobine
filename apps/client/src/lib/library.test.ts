@@ -39,6 +39,13 @@ describe('library', () => {
         }
     });
 
+    it('points a poster at Wikimedia Commons and leaves a title without one bare', async () => {
+        expect((await library.get('sintel'))?.image).toBe(
+            'https://commons.wikimedia.org/wiki/Special:FilePath/Sintel%20poster.jpg?width=500'
+        );
+        expect((await library.get('jazz-sampler'))?.image).toBeUndefined();
+    });
+
     it('streams every track over https from the Internet Archive, without raw spaces', async () => {
         for (const item of await library.all()) {
             expect(item.tracks.length).toBeGreaterThan(0);

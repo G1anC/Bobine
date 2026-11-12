@@ -64,7 +64,12 @@ the controls along with the picture.
             class="aspect-video w-full rounded-fc-lg bg-fc-surface"
         ></video>
     {:else}
-        <Artwork title={item.title} kind={item.kind} class="aspect-square w-40 md:w-56" />
+        <Artwork
+            title={item.title}
+            kind={item.kind}
+            image={item.image}
+            class="aspect-square w-40 rounded-fc-lg md:w-56"
+        />
         <audio
             src={track.url}
             autoplay

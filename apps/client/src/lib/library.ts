@@ -12,6 +12,7 @@ export type MediaItem = {
     license: string;
     licenseUrl: string;
     source: string;
+    image?: string;
     tracks: Track[];
 };
 
@@ -30,6 +31,11 @@ function archiveFile(item: string, file: string): string {
     return `https://archive.org/download/${item}/${encodeURI(file)}`;
 }
 
+/** A picture kept by Wikimedia Commons, served 500 pixels wide. */
+function commons(file: string): string {
+    return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=500`;
+}
+
 function part(item: string, file: string, title: string, seconds: number): Track {
     const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     return { id, title, seconds, url: archiveFile(item, file) };
@@ -46,6 +52,7 @@ const HOUSTON = 'Houston-We-Have-a-Podcast';
 /**
  * The sample catalogue: openly licensed titles streamed from the Internet Archive. It stands
  * in for the library API until that exists, and carries the credit each licence asks for.
+ * Posters and covers come from Wikimedia Commons where an openly licensed one exists.
  */
 const SAMPLE: MediaItem[] = [
     {
@@ -55,6 +62,7 @@ const SAMPLE: MediaItem[] = [
         year: 2008,
         credit: 'Blender Foundation',
         summary: 'A gentle giant rabbit takes his revenge on three rodents who spoil his morning.',
+        image: commons('Big buck bunny poster big.jpg'),
         ...CC_BY,
         ...film('BigBuckBunny_124', 'Content/big_buck_bunny_720p_surround.mp4', 'Big Buck Bunny', 597)
     },
@@ -65,6 +73,7 @@ const SAMPLE: MediaItem[] = [
         year: 2010,
         credit: 'Blender Foundation',
         summary: 'A lone girl crosses a harsh world in search of the baby dragon she once rescued.',
+        image: commons('Sintel poster.jpg'),
         ...CC_BY,
         ...film('Sintel', 'sintel-2048-stereo_512kb.mp4', 'Sintel', 888)
     },
@@ -75,6 +84,7 @@ const SAMPLE: MediaItem[] = [
         year: 2006,
         credit: 'Blender Foundation',
         summary: 'Two men wander a vast machine that only one of them believes in.',
+        image: commons('ElephantsDreamPoster.jpg'),
         ...CC_BY,
         ...film('ElephantsDream', 'ed_hd.mp4', 'Elephants Dream', 654)
     },
@@ -85,6 +95,7 @@ const SAMPLE: MediaItem[] = [
         year: 2012,
         credit: 'Blender Foundation',
         summary: 'In a ruined Amsterdam, a small crew stages one last attempt to stop the robots.',
+        image: commons('Tos-poster.png'),
         ...CC_BY,
         ...film('Tears-of-Steel', 'tears_of_steel_720p.mp4', 'Tears of Steel', 734)
     },
@@ -95,6 +106,7 @@ const SAMPLE: MediaItem[] = [
         year: 1968,
         credit: 'George A. Romero',
         summary: 'Strangers barricade themselves in a farmhouse as the dead begin to walk.',
+        image: commons('Night Of The Living Dead (1968) - Poster.jpg'),
         ...PUBLIC_DOMAIN,
         ...film(
             'Night.Of.The.Living.Dead_1080p',
@@ -110,6 +122,7 @@ const SAMPLE: MediaItem[] = [
         year: 2013,
         credit: 'Pablo Vazquez, Blender Foundation',
         summary: 'Koro the llama meets one obstacle after another on the roads of Patagonia.',
+        image: commons('Pablo Vazquez - Caminandes - Episode 1 - Llama Drama - Cover thumbnail.png'),
         ...CC_BY,
         source: archivePage('Caminandes1LlamaDrama'),
         tracks: [
@@ -125,6 +138,7 @@ const SAMPLE: MediaItem[] = [
         year: 2012,
         credit: 'Kimiko Ishizaka, after J. S. Bach',
         summary: 'A studio recording of the Goldberg Variations, given to the public domain by its makers.',
+        image: commons('Cover of the Open Goldberg Variations.jpg'),
         ...CC_ZERO,
         source: archivePage(GOLDBERG),
         tracks: [

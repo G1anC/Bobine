@@ -37,7 +37,12 @@
 {#if item}
     <article class="flex flex-col gap-10">
         <header class="flex flex-col gap-6 md:flex-row md:items-end">
-            <Artwork title={item.title} kind={item.kind} class="{shape} w-40 shrink-0 md:w-56" />
+            <Artwork
+                title={item.title}
+                kind={item.kind}
+                image={item.image}
+                class="{shape} w-40 shrink-0 rounded-fc-lg md:w-56"
+            />
             <div class="flex max-w-prose flex-col gap-4">
                 <h1 class="text-fc-3xl text-fc-fg">{item.title}</h1>
                 <p class="text-fc-sm text-fc-fg-muted">{facts(item)}</p>
