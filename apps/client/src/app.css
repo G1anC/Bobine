@@ -39,3 +39,28 @@
 :focus-visible {
 	outline-width: 4px;
 }
+
+[data-zone='left'] a[href='/'] {
+	--nav-tint: var(--color-fc-chart-2);
+}
+
+[data-zone='left'] a[href='/movies'] {
+	--nav-tint: var(--color-fc-chart-4);
+}
+
+[data-zone='left'] a[href='/shows'] {
+	--nav-tint: var(--color-fc-chart-1);
+}
+
+[data-zone='left'] a[href='/music'] {
+	--nav-tint: var(--color-fc-chart-5);
+}
+
+[data-zone='left'] a[href='/podcasts'] {
+	--nav-tint: var(--color-fc-chart-3);
+}
+
+[data-zone='left'] a > :is(svg, iconify-icon),
+[data-zone='left'] a > .relative > :is(svg, iconify-icon) {
+	color: var(--nav-tint, inherit);
+}
