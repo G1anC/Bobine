@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { EmptyState } from '@facile/muse';
     import FilterBar from '$lib/components/FilterBar.svelte';
-    import Mosaic from '$lib/components/Mosaic.svelte';
+    import Shelf from '$lib/components/Shelf.svelte';
     import { decadeOf, decadesOf } from '$lib/decades';
     import { appIcons } from '$lib/icons';
     import { library } from '$lib/library';
@@ -11,10 +10,9 @@
 
 <svelte:head><title>Movies · Bobine</title></svelte:head>
 
-<h1 class="sr-only">Movies</h1>
-{#await library.list('movie') then movies}
-    {#if movies.length > 0}
-        <Mosaic items={decade === null ? movies : movies.filter((movie) => decadeOf(movie.year) === decade)} />
+<div class="flex flex-col gap-10">
+    <h1 class="text-fc-2xl font-semibold text-fc-fg">Movies</h1>
+    {#await library.list('movie') then movies}
         <FilterBar
             label="Filter movies by decade"
             options={[
@@ -23,7 +21,12 @@
             ]}
             bind:value={decade}
         />
-    {:else}
-        <EmptyState icon={appIcons.movies} title="No movies yet" />
-    {/if}
-{/await}
+        <Shelf
+            title={decade === null ? 'All movies' : `Movies of the ${decade}s`}
+            icon={appIcons.movies}
+            empty="No movies yet"
+            items={decade === null ? movies : movies.filter((movie) => decadeOf(movie.year) === decade)}
+            layout="grid"
+        />
+    {/await}
+</div>
