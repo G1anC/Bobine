@@ -44,7 +44,7 @@
 {#if session.user}
 	<div class="relative h-dvh overflow-hidden bg-fc-page">
 		<SideBar
-			class="absolute top-4 bottom-4 left-4 z-30 hidden h-auto bg-transparent md:flex"
+			class="absolute top-4 bottom-4 left-4 z-30 hidden h-auto bg-fc-component/80 backdrop-blur-xl md:flex"
 			data-zone="left"
 			icon={BOBINE_ICON}
 			title="Bobine"
