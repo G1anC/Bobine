@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Button, SettingsRow, SettingsSection, THEMES, type Theme } from '@facile/muse';
     import { goto } from '$app/navigation';
+    import { appIcons } from '$lib/icons';
     import { session, signOut } from '$lib/session.svelte';
     import { appearance, saveTheme } from '$lib/theme.svelte';
     import { canHandOff, handOffEnabled, setHandOff } from '$lib/vlc';
@@ -33,7 +34,7 @@
             <span class="text-fc-sm text-fc-fg">{session.user?.email}</span>
         </SettingsRow>
         <SettingsRow label="Session">
-            <Button size="lg" variant="danger" onclick={leave}>Sign out</Button>
+            <Button size="lg" variant="danger" icon={appIcons.signOut} onclick={leave}>Sign out</Button>
         </SettingsRow>
     </SettingsSection>
 

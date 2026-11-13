@@ -1,16 +1,23 @@
 <script lang="ts">
-	import { Button, MobileNav, SideBar, Spinner } from '@facile/muse';
+	import { Button, MobileNav, Spinner, icons } from '@facile/muse';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { BOBINE_ICON, appIcons } from '$lib/icons';
+	import KeyHints from '$lib/components/KeyHints.svelte';
+	import SideBar from '$lib/components/SideBar.svelte';
+	import TopBar from '$lib/components/TopBar.svelte';
+	import { appIcons } from '$lib/icons';
 	import { loadSession, session, signOut } from '$lib/session.svelte';
 	import { appearance, saveTheme } from '$lib/theme.svelte';
+	import { topBar } from '$lib/topBar.svelte';
+	import { focused, watchZone } from '$lib/tv/zone.svelte';
 
 	let { children } = $props();
 
 	$effect(() => {
 		if (session.status === 'ready' && !session.user) void goto('/login', { replaceState: true });
 	});
+
+	$effect(() => watchZone());
 
 	const path = $derived(page.url.pathname);
 	const pages = $derived([
@@ -25,40 +32,39 @@
 			active: path.startsWith('/podcasts')
 		}
 	]);
+	const menu = $derived([
+		...pages,
+		{ label: 'Settings', href: '/settings', icon: icons.settings, active: path.startsWith('/settings') }
+	]);
 	const user = $derived(
 		session.user
 			? { name: session.user.name.trim() || session.user.email, email: session.user.email, avatar: session.user.avatar_url }
 			: undefined
 	);
+	async function leave() {
+		await signOut();
+		await goto('/login', { replaceState: true });
+	}
 	const userMenu = $derived({
 		theme: appearance.theme,
 		onThemeChange: saveTheme,
 		settingsHref: '/settings',
-		onSignOut: async () => {
-			await signOut();
-			await goto('/login', { replaceState: true });
-		}
+		onSignOut: leave
 	});
 </script>
 
 {#if session.user}
-	<div class="relative h-dvh overflow-hidden bg-fc-page">
-		<SideBar
-			class="absolute top-4 bottom-4 left-4 z-30 hidden h-auto bg-fc-component/80 backdrop-blur-xl md:flex"
-			data-zone="left"
-			icon={BOBINE_ICON}
-			title="Bobine"
-			{pages}
-			{user}
-			{userMenu}
-		/>
+	<div class="relative flex h-dvh w-screen flex-col overflow-hidden bg-shell p-1 ">
+		<TopBar onSignOut={leave} />
+		<SideBar items={menu} />
 		<main
 			id="main"
 			data-zone="main"
-			class="absolute inset-0 overflow-y-auto overscroll-contain px-4 pt-6 pb-28 md:pt-10 md:pr-10 md:pb-10 md:pl-68"
+			class="relative min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-3xl bg-panel px-4 pt-6 pb-28 md:p-10"
 		>
 			{@render children()}
 		</main>
+		<KeyHints zone={focused.zone} hasFilter={topBar.filter !== null} />
 		<MobileNav class="md:hidden" data-zone="left" items={pages} {user} {userMenu} />
 	</div>
 {:else if session.status === 'offline'}

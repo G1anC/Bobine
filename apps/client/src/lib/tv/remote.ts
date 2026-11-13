@@ -7,9 +7,10 @@ const FOCUSABLE =
 const TEXT_INPUT = 'input:not([type=checkbox]):not([type=radio]):not([type=range]), textarea, select';
 const BACK_KEYS = new Set(['Escape', 'GoBack', 'BrowserBack', 'Backspace']);
 const ZONE = '[data-zone]';
+const ABOVE: Record<string, string> = { up: 'top' };
 const ZONE_KEYS: Record<string, string[]> = {
 	ArrowLeft: ['left'],
-	ArrowUp: ['up', 'main'],
+	ArrowUp: ['up', 'top', 'main'],
 	ArrowRight: ['main'],
 	ArrowDown: ['main'],
 	Enter: ['main']
@@ -42,11 +43,11 @@ function members(zone: HTMLElement): HTMLElement[] {
 
 /**
  * From normal mode, where nothing holds focus, a key enters a zone: Left the `left` one, Up
- * the `up` one, and Right, Down or OK the `main` one. Focus lands on the current page link
- * when the zone has one, on its first element otherwise.
+ * the `up` one or else the `top` one, and Right, Down or OK the `main` one. Focus lands on
+ * the current page link when the zone has one, on its first element otherwise.
  */
-function enterZone(event: KeyboardEvent): void {
-	for (const name of ZONE_KEYS[event.key] ?? []) {
+function enterZone(event: KeyboardEvent, names = ZONE_KEYS[event.key] ?? []): void {
+	for (const name of names) {
 		for (const zone of document.querySelectorAll<HTMLElement>(`[data-zone="${name}"]`)) {
 			const inside = members(zone);
 			const target = inside.find((element) => element.getAttribute('aria-current') === 'page') ?? inside[0];
@@ -66,30 +67,31 @@ function leaveZone(): boolean {
 	return true;
 }
 
-function moveFocus(event: KeyboardEvent, reachable: HTMLElement[]): void {
+function moveFocus(event: KeyboardEvent, reachable: HTMLElement[]): boolean {
 	const direction = directionOf(event.key);
-	if (!direction) return;
+	if (!direction) return false;
 	const current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 	const horizontalInText = editingText(current) && (direction === 'left' || direction === 'right');
-	if (horizontalInText) return;
+	if (horizontalInText) return true;
 	if (!current || current === document.body || !reachable.includes(current)) {
 		reachable[0]?.focus();
 		event.preventDefault();
-		return;
+		return true;
 	}
 	const others = reachable.filter((element) => element !== current);
 	const boxes: Box[] = others.map((element) => element.getBoundingClientRect());
 	const index = nearest(current.getBoundingClientRect(), boxes, direction);
-	if (index < 0) return;
+	if (index < 0) return false;
 	event.preventDefault();
 	others[index].focus();
 	others[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+	return true;
 }
 
 /**
  * Routes a key. A page without zones, or an open dialog, keeps plain spatial navigation over
  * everything on screen. Otherwise the arrows stay inside the zone that holds focus, and in
- * normal mode they pick a zone to enter.
+ * normal mode they pick a zone to enter. Up from the top edge of the filters climbs to the bar.
  */
 function navigate(event: KeyboardEvent): void {
 	if (document.querySelector('dialog[open]') || !document.querySelector(ZONE)) {
@@ -97,8 +99,12 @@ function navigate(event: KeyboardEvent): void {
 		return;
 	}
 	const zone = zoneOf(document.activeElement);
-	if (zone) moveFocus(event, members(zone));
-	else enterZone(event);
+	if (!zone) {
+		enterZone(event);
+		return;
+	}
+	const above = ABOVE[zone.dataset.zone ?? ''];
+	if (!moveFocus(event, members(zone)) && event.key === 'ArrowUp' && above) enterZone(event, [above]);
 }
 
 function goBack(event: KeyboardEvent): void {
@@ -110,8 +116,8 @@ function goBack(event: KeyboardEvent): void {
 
 /**
  * Makes the app drivable with a TV remote, a keyboard or a gamepad mapped to arrows. The
- * screen is cut into zones, elements marked `data-zone`: the menu (`left`), the filters
- * (`up`) and the page (`main`). In normal mode nothing holds focus and one key enters a
+ * screen is cut into zones, elements marked `data-zone`: the top bar (`top`), the menu
+ * (`left`), the filters (`up`) and the page (`main`). In normal mode nothing holds focus and one key enters a
  * zone. Inside a zone the arrows move focus to the nearest element of that zone and OK
  * activates it. Back, or Escape, returns to normal mode, and from normal mode to the previous
  * page. On Android TV the hardware Back button goes through Capacitor, which otherwise

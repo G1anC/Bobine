@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { backend, ssoLoginUrl, type AuthConfig } from '$lib/backend';
-	import { BOBINE_ICON } from '$lib/icons';
+	import { BOBINE_ICON, appIcons } from '$lib/icons';
 	import { session, setUser } from '$lib/session.svelte';
 
 	let config = $state<AuthConfig | null>(null);
@@ -92,7 +92,7 @@
 					/>
 				{/snippet}
 			</Field>
-			<Button type="submit" size="lg" disabled={busy}>
+			<Button type="submit" size="lg" icon={mode === 'register' ? undefined : appIcons.signIn} disabled={busy}>
 				{mode === 'register' ? 'Create account' : 'Sign in'}
 			</Button>
 			{#if canRegister}
