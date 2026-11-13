@@ -12,8 +12,8 @@
     }: { title: string; icon: string; empty: string; items?: MediaItem[]; layout?: 'row' | 'grid' } = $props();
 
     const layouts = {
-        row: 'flex gap-3 overflow-x-auto *:w-40 *:shrink-0 md:*:w-60',
-        grid: 'grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-3'
+        row: 'flex gap-1 overflow-x-auto *:w-40 *:shrink-0 md:*:w-60',
+        grid: 'grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-1'
     };
 </script>
 
