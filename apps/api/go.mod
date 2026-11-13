@@ -3,10 +3,10 @@ module github.com/G1anC/Bobine/apps/api
 go 1.26.11
 
 require (
-	github.com/FacileStudio/porte v0.17.0
-	github.com/FacileStudio/tronc v0.21.0
-	github.com/FacileStudio/tronc/migrate v0.1.0
-	github.com/FacileStudio/tronc/testdb v0.1.1
+	github.com/FacileStudio/porte v0.19.0
+	github.com/FacileStudio/tronc v0.22.2
+	github.com/FacileStudio/tronc/migrate v0.1.1
+	github.com/FacileStudio/tronc/testdb v0.1.2
 	github.com/go-chi/chi/v5 v5.5.0
 	gorm.io/driver/postgres v1.6.3
 	gorm.io/gorm v1.31.2
@@ -14,7 +14,7 @@ require (
 
 require (
 	github.com/coreos/go-oidc/v3 v3.20.0 // indirect
-	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.9 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
@@ -25,9 +25,9 @@ require (
 	github.com/pressly/goose/v3 v3.27.3 // indirect
 	github.com/sethvargo/go-retry v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.55.0 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
-	golang.org/x/sync v0.22.0 // indirect
-	golang.org/x/sys v0.47.0 // indirect
-	golang.org/x/text v0.41.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 )
