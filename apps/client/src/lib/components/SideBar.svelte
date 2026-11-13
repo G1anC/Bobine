@@ -16,7 +16,7 @@ Left from normal mode.
 <nav
     data-zone="left"
     aria-label="Main menu"
-    class="merge-left absolute top-1/2 left-1 z-50 hidden -translate-y-1/2 flex-col gap-1 rounded-r-3xl bg-shell py-1 pr-1 md:flex"
+    class="merge-left absolute top-1/2 left-1 z-50 hidden -translate-y-1/2 flex-col gap-1 rounded-r-2xl bg-shell py-1 pr-1 md:flex"
 >
     {#each items as item (item.href)}
         <a

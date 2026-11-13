@@ -25,6 +25,7 @@ const DARK_ICON = 'iconoir:half-moon';
 const SIGN_IN_ICON = 'iconoir:log-in';
 const SIGN_OUT_ICON = 'iconoir:log-out';
 const DATE_ICON = 'iconoir:calendar';
+const CHEVRON_DOWN_ICON = 'iconoir:nav-arrow-down';
 
 export const appIcons = {
 	home: HOME_ICON,
@@ -47,7 +48,8 @@ export const appIcons = {
 	dark: DARK_ICON,
 	signIn: SIGN_IN_ICON,
 	signOut: SIGN_OUT_ICON,
-	date: DATE_ICON
+	date: DATE_ICON,
+	chevronDown: CHEVRON_DOWN_ICON
 };
 
 /** The icon that stands for each kind of media, on placeholders and empty states. */
@@ -143,6 +145,11 @@ export function registerAppIcons() {
 			width: 24,
 			height: 24,
 			body: "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect width=\"6\" height=\"12\" x=\"9\" y=\"2\" rx=\"3\"/><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M5 10v1a7 7 0 1 0 14 0v-1m-7 8v4m0 0H9m3 0h3\"/></g>"
+		},
+		[CHEVRON_DOWN_ICON]: {
+			width: 24,
+			height: 24,
+			body: "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"m6 9l6 6l6-6\"/>"
 		},
 		[DATE_ICON]: {
 			width: 24,

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Icon, LocaleSwitch, Select, type Theme } from '@facile/muse';
+    import { Icon, LocaleSwitch, type Theme } from '@facile/muse';
+    import Dropdown from '$lib/components/Dropdown.svelte';
     import RollFace from '$lib/components/RollFace.svelte';
     import { BOBINE_ICON, appIcons } from '$lib/icons';
     import { saveLocale } from '$lib/locale.svelte';
@@ -41,22 +42,14 @@ filter when there is one, and Up again climbs to the bar.
         <Icon icon={BOBINE_ICON} size={40} />
     </a>
     {#if topBar.filter}
-        <div data-zone="up" class="group merge-top absolute top-1 left-1/2 -translate-x-1/2 rounded-b-3xl bg-shell pb-1 px-2">
-            {#if topBar.filter.icon}
-                <Icon
-                    icon={topBar.filter.icon}
-                    size={16}
-                    class="pointer-events-none absolute top-1/2 left-5 -translate-y-1/2 text-shell-fg/60 transition-colors
-                        group-focus-within:text-shell-fg group-hover:text-shell-fg motion-reduce:transition-none"
-                />
-            {/if}
-            <Select
-                aria-label={topBar.filter.label}
-                options={topBar.filter.options}
-                bind:value={topBar.filter.value}
-                class="{segment} {idle} w-auto gap-1 bg-transparent {topBar.filter.icon ? 'pl-8' : ''}"
-            />
-        </div>
+        <Dropdown
+            data-zone="up"
+            class="absolute top-1 left-1/2 -translate-x-1/2"
+            label={topBar.filter.label}
+            icon={topBar.filter.icon}
+            options={topBar.filter.options}
+            bind:value={topBar.filter.value}
+        />
     {/if}
     <div class="hidden items-center gap-8 md:flex">
         <div class={pill}>

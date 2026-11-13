@@ -33,7 +33,6 @@
 <svelte:head><title>Movies · Bobine</title></svelte:head>
 
 <div class="flex flex-col gap-10">
-    <h1 class="text-fc-2xl font-semibold text-fc-fg">Movies</h1>
     {#await loading then movies}
         <Shelf
             title={decade === null ? 'All movies' : `Movies of the ${decade}s`}

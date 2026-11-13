@@ -57,6 +57,10 @@
     --fillet-hole: transparent calc(var(--fillet) - 0.5px), var(--color-shell) var(--fillet);
 }
 
+.merge-left {
+    --fillet: 2rem;
+}
+
 .merge-left::before,
 .merge-left::after,
 .merge-top::before,
