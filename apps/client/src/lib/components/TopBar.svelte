@@ -31,7 +31,7 @@ the `top` zone for the remote and the filter the `up` zone: Up from normal mode 
 filter when there is one, and Up again climbs to the bar.
 -->
 
-<header data-zone="top" class="fixed top-0 left-0 w-full bg-shell z-50 flex h-13 shrink-0 items-center justify-between gap-12 px-2.5 pt-2 text-shell-fg">
+<header data-zone="top" class="fixed top-0 left-0 w-full z-50 flex h-13 shrink-0 items-center justify-between gap-12 px-2.5 pt-2 text-shell-fg">
     <a
         href="/"
         aria-label="Bobine, home"
