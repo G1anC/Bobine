@@ -60,7 +60,7 @@
 		<main
 			id="main"
 			data-zone="main"
-			class="relative min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-3xl bg-panel px-4 pt-6 pb-28 md:p-10"
+			class="relative min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-3xl bg-panel px-4 pt-16 pb-28 md:pt-16 md:pr-10 md:pb-14 md:pl-16"
 		>
 			{@render children()}
 		</main>

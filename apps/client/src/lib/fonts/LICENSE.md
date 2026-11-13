@@ -1,14 +1,9 @@
-# Nimbus Sans Narrow
+# Magnetik
 
-Regular and Bold, from the URW++ base 35 font set.
+Regular, by Hanken Design Co.
 
-- Copyright 2015 URW Software, 2013-2014 (URW)++ Design & Development
-- Source: https://github.com/ArtifexSoftware/urw-base35-fonts
-- Licence: GNU Affero General Public License version 3, with the font exception below
-
-> As a special exception, permission is granted to include these font programs in a
-> Postscript or PDF file that consists of a document that contains text to be displayed or
-> printed using this font, regardless of the conditions or license applying to the document
-> itself.
-
-The full licence text is at https://www.gnu.org/licenses/agpl-3.0.html.
+- Copyright (c) 2023 by Alfredo Marco Pradil. All rights reserved.
+- Source: https://hanken.co/products/magnetik
+- Licence: commercial typeface, not openly licensed. Bundling it in the app and
+  redistributing the files requires a licence from Hanken Design Co. that covers
+  web and app embedding.

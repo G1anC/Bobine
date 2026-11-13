@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@facile/muse';
+    import RollFace from '$lib/components/RollFace.svelte';
 
     let { items }: { items: { label: string; href: string; icon: string; active: boolean }[] } = $props();
 </script>
@@ -23,12 +23,10 @@ Left from normal mode.
             href={item.href}
             aria-label={item.label}
             aria-current={item.active ? 'page' : undefined}
-            class="flex h-11 w-11 items-center justify-center rounded-full text-shell-fg/60 outline-shell-fg transition-colors
-                hover:bg-shell-fg/10 hover:text-shell-fg focus-visible:text-shell-fg focus-visible:outline-solid
-                motion-reduce:transition-none
-                {item.active ? 'bg-white' : ''}"
+            class="relative isolate flex size-11 items-center justify-center overflow-hidden rounded-full text-shell-fg/60
+                outline-shell-fg [--roll-h:2.75rem] focus-visible:outline-solid"
         >
-            <Icon icon={item.icon} size={18} />
+            <RollFace icon={item.icon} />
         </a>
     {/each}
 </nav>

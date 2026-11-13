@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Icon, LocaleSwitch, Select, type Theme } from '@facile/muse';
-    import ScrambleText from '$lib/components/ScrambleText.svelte';
+    import RollFace from '$lib/components/RollFace.svelte';
     import { BOBINE_ICON, appIcons } from '$lib/icons';
     import { saveLocale } from '$lib/locale.svelte';
     import { appearance, saveTheme } from '$lib/theme.svelte';
@@ -17,7 +17,8 @@
     const segment =
         'flex h-8 min-w-8 items-center justify-center rounded-[18px] px-2.5 text-fc-sm outline-offset-2 outline-shell-fg transition-colors focus-visible:outline-solid motion-reduce:transition-none';
     const idle = 'text-shell-fg/60 hover:bg-shell-fg/10 hover:text-shell-fg focus-visible:text-shell-fg';
-    const chosen = 'bg-white text-black';
+    const roll =
+        'relative isolate flex h-8 min-w-8 items-center justify-center overflow-hidden rounded-[18px] px-2.5 text-fc-sm text-shell-fg outline-offset-2 outline-shell-fg focus-visible:outline-solid';
 </script>
 
 <!--
@@ -67,17 +68,16 @@ filter when there is one, and Up again climbs to the bar.
                     type="button"
                     aria-label={theme.label}
                     aria-pressed={appearance.theme === theme.value}
-                    class="{segment} {appearance.theme === theme.value ? chosen : idle}"
+                    class={roll}
                     onclick={() => saveTheme(theme.value)}
                 >
-                    <Icon icon={theme.icon} size={18} />
+                    <RollFace icon={theme.icon} />
                 </button>
             {/each}
         </div>
         <div role="group" aria-label="Account" class={pill}>
-            <button type="button" class="{segment} {idle} gap-1.5" onclick={onSignOut}>
-                <Icon icon={appIcons.signOut} size={18} />
-                <ScrambleText text="Sign out" />
+            <button type="button" class={roll} onclick={onSignOut}>
+                <RollFace icon={appIcons.signOut} label="Sign out" />
             </button>
         </div>
     </div>

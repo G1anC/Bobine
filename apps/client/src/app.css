@@ -2,24 +2,16 @@
 @source '../node_modules/@facile/muse/src';
 
 @font-face {
-	font-family: 'Nimbus Sans Narrow';
-	src: url('./lib/fonts/NimbusSansNarrow-Regular.otf') format('opentype');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Nimbus Sans Narrow';
-	src: url('./lib/fonts/NimbusSansNarrow-Bold.otf') format('opentype');
-	font-weight: 700;
+	font-family: 'Magnetik';
+	src: url('./lib/fonts/Magnetik-Regular.woff2') format('woff2');
+	font-weight: 100 900;
 	font-style: normal;
 	font-display: swap;
 }
 
 @theme {
-	--font-fc-body: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
-	--font-fc-title: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
+	--font-fc-body: 'Magnetik', ui-sans-serif, system-ui, sans-serif;
+	--font-fc-title: 'Magnetik', ui-sans-serif, system-ui, sans-serif;
 	--color-white: #f4f4f4;
 	--color-black: oklch(0.09 0 0);
 	--color-shell: #dcdcdc;
@@ -98,6 +90,10 @@
     top: 0;
     left: 100%;
     background: radial-gradient(circle at bottom right, var(--fillet-hole));
+}
+
+[data-zone='left'] a {
+    --roll-ink: var(--nav-tint, var(--color-black));
 }
 
 [data-zone='left'] a[href='/'] {
