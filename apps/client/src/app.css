@@ -1,6 +1,46 @@
 @import '@facile/muse/styles';
 @source '../node_modules/@facile/muse/src';
 
+@font-face {
+	font-family: 'Nimbus Sans Narrow';
+	src: url('./lib/fonts/NimbusSansNarrow-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Nimbus Sans Narrow';
+	src: url('./lib/fonts/NimbusSansNarrow-Bold.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-fc-body: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
+	--font-fc-title: 'Nimbus Sans Narrow', ui-sans-serif, system-ui, sans-serif;
+	--color-white: #f4f4f4;
+	--color-black: oklch(0.09 0 0);
+	--color-shell: #dcdcdc;
+	--color-shell-fg: var(--color-black);
+	--color-panel: var(--color-white);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) {
+		--color-shell: oklch(0.21 0 0);
+		--color-shell-fg: var(--color-white);
+		--color-panel: var(--color-black);
+	}
+}
+
+.dark {
+	--color-shell: oklch(0.21 0 0);
+	--color-shell-fg: var(--color-white);
+	--color-panel: var(--color-black);
+}
+
 @layer base {
 	@media (min-width: 1600px) {
 		html {
@@ -17,4 +57,87 @@
 
 :focus-visible {
 	outline-width: 4px;
+}
+
+.merge-left,
+.merge-top {
+    --fillet: 1.5rem;
+    --fillet-hole: transparent calc(var(--fillet) - 0.5px), var(--color-shell) var(--fillet);
+}
+
+.merge-left::before,
+.merge-left::after,
+.merge-top::before,
+.merge-top::after {
+    content: '';
+    position: absolute;
+    width: var(--fillet);
+    height: var(--fillet);
+    pointer-events: none;
+}
+
+.merge-left::before {
+    bottom: 100%;
+    left: 0;
+    background: radial-gradient(circle at top right, var(--fillet-hole));
+}
+
+.merge-left::after {
+    top: 100%;
+    left: 0;
+    background: radial-gradient(circle at bottom right, var(--fillet-hole));
+}
+
+.merge-top::before {
+    top: 0;
+    right: 100%;
+    background: radial-gradient(circle at bottom left, var(--fillet-hole));
+}
+
+.merge-top::after {
+    top: 0;
+    left: 100%;
+    background: radial-gradient(circle at bottom right, var(--fillet-hole));
+}
+
+[data-zone='left'] a[href='/'] {
+	--nav-tint: var(--color-fc-chart-2);
+}
+
+[data-zone='left'] a[href='/movies'] {
+	--nav-tint: var(--color-fc-chart-4);
+}
+
+[data-zone='left'] a[href='/shows'] {
+	--nav-tint: var(--color-fc-chart-1);
+}
+
+[data-zone='left'] a[href='/music'] {
+	--nav-tint: var(--color-fc-chart-5);
+}
+
+[data-zone='left'] a[href='/podcasts'] {
+	--nav-tint: var(--color-fc-chart-3);
+}
+
+[data-zone='left'] a[href='/settings'] {
+	--nav-tint: var(--color-fc-chart-6);
+}
+
+[data-zone='left'] a > :is(svg, iconify-icon),
+[data-zone='left'] a > .relative > :is(svg, iconify-icon) {
+	transition: color 150ms;
+}
+
+[data-zone='left'] a:is(:hover, :focus-visible, [aria-current='page']) > :is(svg, iconify-icon),
+[data-zone='left'] a:is(:hover, :focus-visible, [aria-current='page']) > .relative > :is(svg, iconify-icon) {
+	color: var(--nav-tint, inherit);
+}
+
+[data-zone]:not([data-zone='main']) {
+	transition: filter 150ms;
+}
+
+[data-zone]:not([data-zone='main']):has(:focus-visible):not(:has([data-zone] :focus-visible)) {
+	filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.25));
 }

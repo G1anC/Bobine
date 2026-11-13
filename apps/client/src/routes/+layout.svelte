@@ -3,19 +3,24 @@
 	import { provideLocale } from '@facile/muse';
 	import { onMount } from 'svelte';
 	import { registerAppIcons } from '$lib/icons';
+	import { language, loadLocale } from '$lib/locale.svelte';
 	import { loadSession } from '$lib/session.svelte';
 	import { registerRemote } from '$lib/tv/remote';
-	import { saveTheme, storedTheme } from '$lib/theme';
+	import { loadTheme } from '$lib/theme.svelte';
 
 	let { children } = $props();
 
-	provideLocale(() => navigator.language);
+	provideLocale(() => language.locale ?? navigator.language);
 	registerAppIcons();
 
 	onMount(() => {
-		saveTheme(storedTheme());
+		loadTheme();
+		loadLocale();
 		void loadSession();
-		return registerRemote();
+		const stopRemote = registerRemote();
+		return () => {
+			stopRemote();
+		};
 	});
 </script>
 

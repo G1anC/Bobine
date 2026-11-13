@@ -73,6 +73,16 @@ Back or Escape goes to the previous page. On Android TV the hardware Back button
 Capacitor. The root font size steps up at 1600px and 2400px wide so a 1080p or 4K TV reads from
 the couch. New UI works with the remote as long as it uses real `<button>` and `<a>` elements.
 
+## Playback
+
+Video goes to [VLC](https://www.videolan.org/vlc/) in the packaged apps. The desktop app starts
+the VLC installed on the computer through the `open_in_vlc` command in `apps/desktop/src/main.rs`;
+the Android app opens a `vlc://` link, which VLC for Android answers. Both accept web streams
+only. When VLC is missing, and always in a browser tab, the player page plays the video itself
+with controls a remote can reach. Until the library API exists, the titles come from the sample
+catalogue in `apps/client/src/lib/library.ts`: openly licensed works streamed from the Internet
+Archive, each shown with its credit and licence.
+
 ## Configuration
 
 | Variable | Default | What it does |
